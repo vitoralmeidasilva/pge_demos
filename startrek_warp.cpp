@@ -12,7 +12,8 @@ public:
 		sAppName = "Star Trek Next Generation Warp Effect";
 	}
 
-	const int nStars = 250;
+	const int nStars = 250 / 2;
+	//const int nStars = 1000;
 
 	struct sStar
 	{
@@ -43,8 +44,8 @@ public:
 		for (auto& star : vStars)
 		{
 			star.fAngle = Random(0.0f, 2.0f * 3.1459f);
-			star.fSpeed = Random(10.0f, 100.0f);
-			star.fDistance = Random(20.0f, 200.0f);
+			star.fSpeed = Random(50.0f, 180.0f);
+			star.fDistance = Random(10.0f, ScreenWidth() + 20.0f);
 			float lum = Random(0.3f, 1.0f);
 			star.col = olc::PixelF(lum, lum, lum, 1.0f);
 		}
@@ -62,11 +63,11 @@ public:
 		for (auto& star : vStars)
 		{
 			star.fDistance += star.fSpeed * fElapsedTime * (star.fDistance / 100.0f); //  * (star.fDistance / 100.0f) == slower for increased distance
-			if (star.fDistance > 200.0f) // randomly generate a new position for the star (when crossing a trashold)
+			if (star.fDistance > (ScreenWidth() + 20.0f)) // randomly generate a new position for the star (when crossing a trashold)
 			{
 				star.fAngle = Random(0.0f, 2.0f * 3.1459f);
-				star.fSpeed = Random(100.0f, 150.0f); // Random(10.0f, 100.0f);
-				star.fDistance = Random(1.0f, 100.0f);
+				star.fSpeed = Random(50.0f, 180.0f);
+				star.fDistance = Random(10.0f, ScreenWidth() + 20.0f);
 				float lum = Random(0.3f, 1.0f);
 				star.col = olc::PixelF(lum, lum, lum, 1.0f);
 			}
@@ -77,14 +78,14 @@ public:
 
 			DrawLineGradient(
 				olc::vf2d(cos(star.fAngle), sin(star.fAngle)) * star.fDistance + vOrigin,
-				olc::vf2d(cos(star.fAngle), sin(star.fAngle)) * (star.fDistance + 5.0f) + vOrigin,
+				olc::vf2d(cos(star.fAngle), sin(star.fAngle)) * (star.fDistance + (5.0f * 2.0f)) + vOrigin,
 
 				olc::BLUE * (star.fDistance / 50.0f),
 				olc::GREEN * (star.fDistance / 50.0f)
 			);
 			DrawLineGradient(
-				olc::vf2d(cos(star.fAngle), sin(star.fAngle)) * (star.fDistance + 5.0f) + vOrigin,
-				olc::vf2d(cos(star.fAngle), sin(star.fAngle)) * (star.fDistance + 10.0f) + vOrigin,
+				olc::vf2d(cos(star.fAngle), sin(star.fAngle)) * (star.fDistance + (5.0f * 2.0f)) + vOrigin,
+				olc::vf2d(cos(star.fAngle), sin(star.fAngle)) * (star.fDistance + (10.0f * 2.0f)) + vOrigin,
 
 				olc::YELLOW * (star.fDistance / 50.0f),
 				olc::RED * (star.fDistance / 50.0f)
@@ -96,6 +97,7 @@ public:
 		//DrawString(10, 10, "FPS: " + std::to_string(GetFPS()));
 
 		/*
+		// TEST LINE DRAWING ALGORITHM
 		olc::vi2d mousePos = GetMousePos();
 		olc::vi2d middleScreen = { ScreenWidth() / 2, ScreenHeight() / 2 };
 		lineLength = (middleScreen - mousePos).mag();
@@ -127,7 +129,7 @@ public:
 		dx = x2 - x1; dy = y2 - y1;
 		bool inverted = false; // changes from which color we are going to start interpolating
 
-		//algorithm = ""; // TODO: DEBUG DEBUG DEBUG
+		//algorithm = "";
 
 		auto rol = [&](void) { pattern = (pattern << 1) | (pattern >> 31); return pattern & 1; };
 
@@ -178,7 +180,7 @@ public:
 				x = x2; y = y2; xe = x1;
 			}
 
-			if (rol()) Draw(x, y, x > 0 ? p1 : p2);
+			if (rol()) Draw(x, y, dx >= 0 ? p1 : p2);
 
 			for (i = 0; x < xe; i++)
 			{
@@ -211,7 +213,7 @@ public:
 				x = x2; y = y2; ye = y1;
 			}
 
-			if (rol()) Draw(x, y, p1);
+			if (rol()) Draw(x, y, dy >= 0 ? p1 : p2);
 
 			for (i = 0; y < ye; i++)
 			{
@@ -240,6 +242,7 @@ int main()
 {
 	WarpEffect demo;
 	if (demo.Construct(256, 240, 4, 4))
+	//if (demo.Construct(1920, 1080, 1, 1))
 		demo.Start();
 	return 0;
 }
