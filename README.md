@@ -1,8 +1,7 @@
-# olcPixelGameEngine demos (unofficial)
+# olcPixelGameEngine graphical demos & concepts
 
-A set of examples and graphical demos/concepts showing how to use the olcPixelGameEngine (https://github.com/OneLoneCoder/olcPixelGameEngine) aka PGE.
+A set of examples and graphical demos/concepts showing how to use the olcPixelGameEngine (https://github.com/OneLoneCoder/olcPixelGameEngine) aka PGE:
 
-Current demos are:
 
  * **startrek_warp.cpp:** a simulation of the Star Trek Next Generation warp effect;
 ![Star Trek](./docs/Wip_PGE_1uXZHsHhWT.gif "Star Trek Next Generation Warp Effect")
