@@ -9,3 +9,7 @@ A set of examples and graphical demos/concepts showing how to use the olcPixelGa
 
  * **xor_texture.cpp:** a XOR texture generator.
 ![XOR texture generator](./docs/Wip_PGE_weGK0r2IIK.png "XOR texture generator")
+
+
+ * **tunnel.cpp:** an old school Tunnel Effect.
+![Tunnel Effect](./docs/Wip_PGE_9GitPVvPd4.gif "Tunnel Effect")
